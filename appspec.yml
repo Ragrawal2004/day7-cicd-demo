@@ -1,0 +1,18 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ec2-user/app
+hooks:
+  BeforeInstall:
+    - location: scripts/stop_app.sh
+      timeout: 30
+      runas: ec2-user
+  AfterInstall:
+    - location: scripts/install_deps.sh
+      timeout: 60
+      runas: ec2-user
+  ApplicationStart:
+    - location: scripts/start_app.sh
+      timeout: 30
+      runas: ec2-user
